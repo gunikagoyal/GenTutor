@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenTutor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.8/firebase-auth.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        .left-aligned {
+            justify-content: flex-start;
+        }
+
+        .right-aligned {
+            justify-content: flex-end;
+        }
+
+        .step-content {
+            width: 300px;
+        }
+
+        .step-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .step-title {
+            font-size: 1.25rem;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body x-data="main" class="font-inter text-base antialiased font-medium relative vertical" :class="[ $store.app.sidebar ? 'toggle-sidebar' : '', $store.app.fullscreen ? 'full' : '',$store.app.mode]">
+
+
+    <div class="bg-white dark:bg-dark text-dark dark:text-white">
+    <div class="fixed inset-0 bg-dark/90 dark:bg-white/5 backdrop-blur-sm z-40 lg:hidden hidden" :class="{'hidden' : !$store.app.sidebar}" @click="$store.app.toggleSidebar()"></div>
+ 
+
+    <div class="main-container flex mx-auto">
+      
+        <nav class="sidebar fixed z-50 flex-none w-[226px] border-r-2 border-lightgray/[8%] dark:border-gray/20 transition-all duration-300">
+            <div class="bg-white dark:bg-dark h-full">
+                <div class="p-3.5">
+                    <a class="main-logo w-full" href="#">
+                        <span class="shrink-0 text-sm font-semibold">GenTutor</span>
+                        
+                        
+                    </a>
+                </div>
+                <div class="flex items-center gap-2.5 py-2.5 pe-2.5">
+                    <div class="h-[2px] bg-lightgray/10 dark:bg-gray/50 block flex-1"></div>
+                    
+                </div>
+                <div class="h-[calc(100vh-93px)] overflow-y-auto overflow-x-hidden space-y-16 px-4 pt-2 pb-4">
+                    <ul class="relative flex flex-col gap-1 text-sm" x-data="{ activeMenu: 'social' }">
+                        
+                        
+                        <li class="menu nav-item">
+                            <a href="javaScript:;" class="nav-link group items-center justify-between active" :class="{'active' : activeMenu === 'social'}" @click="activeMenu === 'social' ? activeMenu = null : activeMenu = 'social'">
+                                <div class="flex items-center">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" d="M20.25 12C20.25 13.6317 19.7661 15.2268 18.8596 16.5835C17.9531 17.9402 16.6646 18.9976 15.1571 19.622C13.6497 20.2464 11.9909 20.4098 10.3905 20.0915C8.79017 19.7732 7.32016 18.9874 6.16637 17.8336C5.01259 16.6798 4.22685 15.2098 3.90853 13.6095C3.5902 12.0092 3.75357 10.3504 4.378 8.84286C5.00242 7.33537 6.05984 6.0469 7.41655 5.14038C8.77325 4.23385 10.3683 3.75 12 3.75C14.188 3.75 16.2865 4.61919 17.8336 6.16637C19.3808 7.71354 20.25 9.81196 20.25 12Z" fill="currentColor"></path>
+                                        <path d="M12.75 7.50003V11.5753L16.1363 13.6069C16.3068 13.7093 16.4297 13.8753 16.4779 14.0684C16.5261 14.2614 16.4956 14.4657 16.3931 14.6363C16.2907 14.8068 16.1247 14.9297 15.9316 14.9779C15.7386 15.0261 15.5343 14.9956 15.3638 14.8932L11.6138 12.6432C11.5028 12.5765 11.4109 12.4822 11.3472 12.3695C11.2834 12.2568 11.25 12.1295 11.25 12V7.50003C11.25 7.30112 11.329 7.11035 11.4697 6.9697C11.6103 6.82905 11.8011 6.75003 12 6.75003C12.1989 6.75003 12.3897 6.82905 12.5303 6.9697C12.671 7.11035 12.75 7.30112 12.75 7.50003ZM12 3.00003C10.8169 2.99708 9.64491 3.22881 8.55193 3.6818C7.45895 4.1348 6.46667 4.80006 5.6325 5.63909C4.95094 6.32909 4.34531 6.99284 3.75 7.68753V6.00003C3.75 5.80112 3.67098 5.61035 3.53033 5.4697C3.38968 5.32905 3.19891 5.25003 3 5.25003C2.80109 5.25003 2.61032 5.32905 2.46967 5.4697C2.32902 5.61035 2.25 5.80112 2.25 6.00003V9.75003C2.25 9.94894 2.32902 10.1397 2.46967 10.2804C2.61032 10.421 2.80109 10.5 3 10.5H6.75C6.94891 10.5 7.13968 10.421 7.28033 10.2804C7.42098 10.1397 7.5 9.94894 7.5 9.75003C7.5 9.55112 7.42098 9.36035 7.28033 9.2197C7.13968 9.07905 6.94891 9.00003 6.75 9.00003H4.59375C5.26406 8.21065 5.93156 7.46722 6.69281 6.69659C7.73518 5.65423 9.0616 4.94216 10.5063 4.64935C11.9511 4.35654 13.4501 4.49598 14.816 5.05023C16.182 5.60449 17.3543 6.54899 18.1866 7.76572C19.0188 8.98245 19.474 10.4175 19.4953 11.8914C19.5166 13.3654 19.1031 14.813 18.3064 16.0532C17.5098 17.2935 16.3652 18.2716 15.0159 18.8651C13.6665 19.4586 12.1722 19.6414 10.7196 19.3905C9.26698 19.1396 7.92052 18.4662 6.84844 17.4544C6.77679 17.3867 6.6925 17.3338 6.60039 17.2986C6.50828 17.2635 6.41015 17.2468 6.3116 17.2496C6.21305 17.2524 6.11602 17.2746 6.02604 17.3149C5.93606 17.3551 5.8549 17.4128 5.78719 17.4844C5.71947 17.5561 5.66654 17.6403 5.6314 17.7325C5.59626 17.8246 5.57961 17.9227 5.5824 18.0212C5.58518 18.1198 5.60735 18.2168 5.64764 18.3068C5.68792 18.3968 5.74554 18.4779 5.81719 18.5457C6.88542 19.5537 8.18414 20.285 9.6 20.6757C11.0159 21.0665 12.5058 21.1047 13.9399 20.7872C15.3739 20.4696 16.7085 19.806 17.827 18.854C18.9456 17.9021 19.8142 16.6909 20.357 15.3261C20.8998 13.9613 21.1003 12.4844 20.9411 11.0243C20.7818 9.56414 20.2677 8.16517 19.4434 6.94947C18.6192 5.73376 17.5099 4.73825 16.2125 4.04982C14.915 3.3614 13.4688 3.00098 12 3.00003Z" fill="currentColor"></path>
+                                    </svg>
+                                    <span class="pl-1.5">Road Map Generator</span>
+                                </div>
+                                
+                            </a>
+                            
+                        </li>
+                        <li class="menu nav-item">
+                            <a href="videos.html" class="nav-link group items-center justify-between" :class="{ 'active': activeMenu === 'videos' }" @click="activeMenu === 'videos' ? activeMenu = null : activeMenu = 'videos'">
+                                <div class="flex items-center">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" d="M20.25 12C20.25 13.6317 19.7661 15.2268 18.8596 16.5835C17.9531 17.9402 16.6646 18.9976 15.1571 19.622C13.6497 20.2464 11.9909 20.4098 10.3905 20.0915C8.79017 19.7732 7.32016 18.9874 6.16637 17.8336C5.01259 16.6798 4.22685 15.2098 3.90853 13.6095C3.5902 12.0092 3.75357 10.3504 4.378 8.84286C5.00242 7.33537 6.05984 6.0469 7.41655 5.14038C8.77325 4.23385 10.3683 3.75 12 3.75C14.188 3.75 16.2865 4.61919 17.8336 6.16637C19.3808 7.71354 20.25 9.81196 20.25 12Z" fill="currentColor"></path>
+                                        <path d="M15.431 14.8891C15.664 15.027 15.9288 15.0999 16.1992 15.0999C16.5131 15.0999 16.818 14.9876 17.0488 14.7855C17.2095 14.6463 17.3372 14.4768 17.4221 14.2871C17.507 14.0974 17.5472 13.8912 17.5399 13.6835C17.5326 13.4758 17.4781 13.2725 17.3818 13.0897C17.2856 12.9069 17.1509 12.7507 16.9886 12.6345L12.75 9.92696V6.94995C12.75 6.74091 12.671 6.54068 12.5303 6.39995C12.3897 6.25922 12.1989 6.17995 12 6.17995C11.8011 6.17995 11.6103 6.25922 11.4697 6.39995C11.329 6.54068 11.25 6.74091 11.25 6.94995V10.6032C11.2478 10.8109 11.302 11.0155 11.4077 11.1967C11.5134 11.3778 11.6657 11.528 11.8485 11.6312L16.1863 14.0273L16.1862 14.0273L16.3187 14.1089L15.431 14.8891Z" fill="currentColor"></path>
+                                        <path d="M12 3.00003C10.8169 2.99708 9.64491 3.22881 8.55193 3.6818C7.45895 4.1348 6.46667 4.80006 5.6325 5.63909C4.95094 6.32909 4.34531 6.99284 3.75 7.68753V6.00003C3.75 5.80112 3.67098 5.61035 3.53033 5.4697C3.38968 5.32905 3.19891 5.25003 3 5.25003C2.80109 5.25003 2.61032 5.32905 2.46967 5.4697C2.32902 5.61035 2.25 5.80112 2.25 6.00003V9.75003C2.25 9.94894 2.32902 10.1397 2.46967 10.2804C2.61032 10.421 2.80109 10.5 3 10.5H6.75C6.94891 10.5 7.13968 10.421 7.28033 10.2804C7.42098 10.1397 7.5 9.94894 7.5 9.75003C7.5 9.55112 7.42098 9.36035 7.28033 9.2197C7.13968 9.07905 6.94891 9.00003 6.75 9.00003H4.59375C5.26406 8.21065 5.93156 7.46722 6.69281 6.69659C7.73518 5.65423 9.0616 4.94216 10.5063 4.64935C11.9511 4.35654 13.4501 4.49598 14.816 5.05023C16.182 5.60449 17.3543 6.54899 18.1866 7.76572C19.0188 8.98245 19.474 10.4175 19.4953 11.8914C19.5166 13.3654 19.1031 14.813 18.3064 16.0532C17.5098 17.2935 16.3652 18.2716 15.0159 18.8651C13.6665 19.4586 12.1722 19.6414 10.7196 19.3905C9.26698 19.1396 7.92052 18.4662 6.84844 17.4544C6.77679 17.3867 6.6925 17.3338 6.60039 17.2986C6.50828 17.2635 6.41015 17.2468 6.3116 17.2496C6.21305 17.2524 6.11602 17.2746 6.02604 17.3149C5.93606 17.3551 5.8549 17.4128 5.78719 17.4844C5.71947 17.5561 5.66654 17.6403 5.6314 17.7325C5.59626 17.8246 5.57961 17.9227 5.5824 18.0212C5.58518 18.1198 5.60735 18.2168 5.64764 18.3068C5.68792 18.3968 5.74554 18.4779 5.81719 18.5457C6.88542 19.5537 8.18414 20.285 9.6 20.6757C11.0159 21.0665 12.5058 21.1047 13.9399 20.7872C15.3739 20.4696 16.7085 19.806 17.827 18.854C18.9456 17.9021 19.8142 16.6909 20.357 15.3261C20.8998 13.9613 21.1003 12.4844 20.9411 11.0243C20.7818 9.56414 20.2677 8.16517 19.4434 6.94947C18.6192 5.73376 17.5099 4.73825 16.2125 4.04982C14.915 3.3614 13.4688 3.00098 12 3.00003Z" fill="currentColor"></path>
+                                    </svg>
+                                    <span class="pl-1.5">Videos</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu nav-item">
+                            <a href="quiz.html" class="nav-link group items-center justify-between" :class="{ 'active': activeMenu === 'videos' }" @click="activeMenu === 'videos' ? activeMenu = null : activeMenu = 'videos'">
+                                <div class="flex items-center">
+                                    <svg width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" d="M16.25 3.75V16.875C16.25 17.0408 16.1842 17.1997 16.0669 17.3169C15.9497 17.4342 15.7908 17.5 15.625 17.5H4.375C4.20924 17.5 4.05027 17.4342 3.93306 17.3169C3.81585 17.1997 3.75 17.0408 3.75 16.875V3.75C3.75 3.58424 3.81585 3.42527 3.93306 3.30806C4.05027 3.19085 4.20924 3.125 4.375 3.125H7.5C7.09344 3.66547 6.87404 4.32369 6.875 5V5.625H13.125V5C13.126 4.32369 12.9066 3.66547 12.5 3.125H15.625C15.7908 3.125 15.9497 3.19085 16.0669 3.30806C16.1842 3.42527 16.25 3.58424 16.25 3.75Z" fill="currentColor"></path>
+                                        <path d="M13.125 11.875C13.125 12.0408 13.0592 12.1997 12.9419 12.317C12.8247 12.4342 12.6658 12.5 12.5 12.5H7.5C7.33424 12.5 7.17527 12.4342 7.05806 12.317C6.94085 12.1997 6.875 12.0408 6.875 11.875C6.875 11.7092 6.94085 11.5503 7.05806 11.4331C7.17527 11.3159 7.33424 11.25 7.5 11.25H12.5C12.6658 11.25 12.8247 11.3159 12.9419 11.4331C13.0592 11.5503 13.125 11.7092 13.125 11.875ZM12.5 8.75001H7.5C7.33424 8.75001 7.17527 8.81586 7.05806 8.93307C6.94085 9.05028 6.875 9.20925 6.875 9.37501C6.875 9.54077 6.94085 9.69974 7.05806 9.81695C7.17527 9.93416 7.33424 10 7.5 10H12.5C12.6658 10 12.8247 9.93416 12.9419 9.81695C13.0592 9.69974 13.125 9.54077 13.125 9.37501C13.125 9.20925 13.0592 9.05028 12.9419 8.93307C12.8247 8.81586 12.6658 8.75001 12.5 8.75001ZM16.875 3.75001V16.875C16.875 17.2065 16.7433 17.5245 16.5089 17.7589C16.2745 17.9933 15.9565 18.125 15.625 18.125H4.375C4.04348 18.125 3.72554 17.9933 3.49112 17.7589C3.2567 17.5245 3.125 17.2065 3.125 16.875V3.75001C3.125 3.41849 3.2567 3.10055 3.49112 2.86613C3.72554 2.63171 4.04348 2.50001 4.375 2.50001H7.20781C7.55899 2.10682 7.98924 1.79224 8.47041 1.57685C8.95158 1.36146 9.47282 1.25012 10 1.25012C10.5272 1.25012 11.0484 1.36146 11.5296 1.57685C12.0108 1.79224 12.441 2.10682 12.7922 2.50001H15.625C15.9565 2.50001 16.2745 2.63171 16.5089 2.86613C16.7433 3.10055 16.875 3.41849 16.875 3.75001ZM7.5 5.00001H12.5C12.5 4.33697 12.2366 3.70108 11.7678 3.23224C11.2989 2.7634 10.663 2.50001 10 2.50001C9.33696 2.50001 8.70107 2.7634 8.23223 3.23224C7.76339 3.70108 7.5 4.33697 7.5 5.00001ZM15.625 3.75001H13.5352C13.6773 4.15143 13.75 4.57416 13.75 5.00001V5.62501C13.75 5.79077 13.6842 5.94974 13.5669 6.06695C13.4497 6.18416 13.2908 6.25001 13.125 6.25001H6.875C6.70924 6.25001 6.55027 6.18416 6.43306 6.06695C6.31585 5.94974 6.25 5.79077 6.25 5.62501V5.00001C6.25001 4.57416 6.32267 4.15143 6.46484 3.75001H4.375V16.875H15.625V3.75001Z" fill="currentColor"></path>
+                                    </svg>
+                                    <span class="pl-1.5">Quiz</span>
+                                </div>
+                            </a>
+                        </li>
+       
+                </ul></div>
+            </div>
+        </nav>
+
+        <div class="main-content flex-1">
+
+            <div class="h-[60px] bg-white dark:bg-dark dark:border-gray/20 border-b-2 border-lightgray/10 flex items-center justify-between gap-2.5 px-7">
+                
+                <div class="flex-auto flex items-center gap-2.5">
+
+
+                    <div class="lg:hidden">
+
+                        <button type="button" class="hover:text-primary" @click="$store.app.toggleSidebar()">
+                            <svg width="13" height="12" class="rotate-180" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path opacity="0.2" d="M5.46133 6.00002L11.1623 12L12.4613 10.633L8.05922 6.00002L12.4613 1.36702L11.1623 0L5.46133 6.00002Z" fill="currentColor"></path>
+                                <path d="M0 6.00002L5.70101 12L7 10.633L2.59782 6.00002L7 1.36702L5.70101 0L0 6.00002Z" fill="currentColor"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                </div>
+                <div class="sm:block hidden flex-auto">
+                    
+                </div>
+                <div class="flex items-center gap-5">
+                    <div x-data="{ fullScreen: false }">
+                        <button class="text-lightgray hover:text-primary block" x-bind:class="{ 'hidden': fullScreen, 'block': !fullScreen }" x-on:click="fullScreen = !fullScreen" @click="$store.app.toggleFullScreen()">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g opacity="0.4">
+                                    <path d="M19 7V1H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M19 1L11.5 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                                <path d="M1 13V19H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M8.5 11.5L1 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </button>
+                        <button class="text-lightgray hidden" x-bind:class="{ 'block': fullScreen, 'hidden': !fullScreen }" x-on:click="fullScreen = !fullScreen" @click="$store.app.toggleFullScreen()">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g opacity="0.4">
+                                    <path d="M11.5 2.5V8.5H17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M11.5 8.5L19 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                                <path d="M8.5 17.5V11.5H2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M1 19L8.5 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="text-lightgray hover:text-primary duration-300">
+                        <a href="javascript:;" x-show="$store.app.mode === 'light'" @click="$store.app.toggleMode('dark')" style="display: none;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M22 11.9999C22 17.5228 17.5228 21.9999 12 21.9999C10.8358 21.9999 9.71801 21.801 8.67887 21.4352C8.24138 20.3767 8 19.2165 8 17.9999C8 15.7787 8.80467 13.7454 10.1384 12.1757C11.31 13.8813 13.2744 14.9999 15.5 14.9999C17.8615 14.9999 19.9289 13.7405 21.0672 11.8568C21.3065 11.4607 22 11.5372 22 11.9999Z" fill="currentColor"></path>
+                                <path d="M2 12C2 16.3586 4.78852 20.0659 8.67887 21.4353C8.24138 20.3768 8 19.2166 8 18C8 15.7788 8.80467 13.7455 10.1384 12.1758C9.42027 11.1303 9 9.86422 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12Z" fill="currentColor"></path>
+                            </svg>
+                        </a>
+                        <a href="javascript:;" x-show="$store.app.mode === 'dark'" @click="$store.app.toggleMode('light')" style="">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 12C18 15.3137 15.3137 18 12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12Z" fill="currentColor"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.25C12.4142 1.25 12.75 1.58579 12.75 2V3C12.75 3.41421 12.4142 3.75 12 3.75C11.5858 3.75 11.25 3.41421 11.25 3V2C11.25 1.58579 11.5858 1.25 12 1.25ZM1.25 12C1.25 11.5858 1.58579 11.25 2 11.25H3C3.41421 11.25 3.75 11.5858 3.75 12C3.75 12.4142 3.41421 12.75 3 12.75H2C1.58579 12.75 1.25 12.4142 1.25 12ZM20.25 12C20.25 11.5858 20.5858 11.25 21 11.25H22C22.4142 11.25 22.75 11.5858 22.75 12C22.75 12.4142 22.4142 12.75 22 12.75H21C20.5858 12.75 20.25 12.4142 20.25 12ZM12 20.25C12.4142 20.25 12.75 20.5858 12.75 21V22C12.75 22.4142 12.4142 22.75 12 22.75C11.5858 22.75 11.25 22.4142 11.25 22V21C11.25 20.5858 11.5858 20.25 12 20.25Z" fill="currentColor"></path>
+                                <g opacity="0.3">
+                                    <path d="M4.39838 4.39838C4.69127 4.10549 5.16615 4.10549 5.45904 4.39838L5.85188 4.79122C6.14477 5.08411 6.14477 5.55898 5.85188 5.85188C5.55898 6.14477 5.08411 6.14477 4.79122 5.85188L4.39838 5.45904C4.10549 5.16615 4.10549 4.69127 4.39838 4.39838Z" fill="currentColor"></path>
+                                    <path d="M19.6009 4.39864C19.8938 4.69153 19.8938 5.16641 19.6009 5.4593L19.2081 5.85214C18.9152 6.14503 18.4403 6.14503 18.1474 5.85214C17.8545 5.55924 17.8545 5.08437 18.1474 4.79148L18.5402 4.39864C18.8331 4.10575 19.308 4.10575 19.6009 4.39864Z" fill="currentColor"></path>
+                                    <path d="M18.1474 18.1474C18.4403 17.8545 18.9152 17.8545 19.2081 18.1474L19.6009 18.5402C19.8938 18.8331 19.8938 19.308 19.6009 19.6009C19.308 19.8938 18.8331 19.8938 18.5402 19.6009L18.1474 19.2081C17.8545 18.9152 17.8545 18.4403 18.1474 18.1474Z" fill="currentColor"></path>
+                                    <path d="M5.85188 18.1477C6.14477 18.4406 6.14477 18.9154 5.85188 19.2083L5.45904 19.6012C5.16615 19.8941 4.69127 19.8941 4.39838 19.6012C4.10549 19.3083 4.10549 18.8334 4.39838 18.5405L4.79122 18.1477C5.08411 17.8548 5.55898 17.8548 5.85188 18.1477Z" fill="currentColor"></path>
+                                </g>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="profile z-10" x-data="dropdown" @click.outside="open = false">
+                        <button type="button" class="flex items-center gap-2.5" @click="toggle()">
+                            <img class="h-[38px] bg-white w-[38px] rounded-full" src="https://cdn-icons-png.freepik.com/512/9706/9706577.png" alt="userPFP" id="userPFP">
+                            <div class="text-start">
+                                <div class="flex items-center gap-1">
+                                    <span class="hidden xl:block text-sm font-semibold">USERNAME</span>
+                                    <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1.29241 5.20759C0.901881 4.81707 0.90188 4.18391 1.29241 3.79338C1.68293 3.40286 2.31609 3.40286 2.70662 3.79338L5.99951 7.08627L9.2924 3.79338C9.68293 3.40286 10.3161 3.40286 10.7066 3.79338C11.0971 4.18391 11.0971 4.81707 10.7066 5.20759L6.70662 9.2076C6.31609 9.59812 5.68293 9.59812 5.2924 9.2076L1.29241 5.20759Z" fill="currentColor"></path>
+                                    </svg>
+                                </div>
+                                
+                            </div>
+                        </button>
+                        <ul x-show="open" x-transition="" x-transition.duration.300ms="" style="display: none;">
+                           
+                            
+                            
+                            <li>
+                                <a onclick="logoutUser();" class="!text-danger flex items-center gap-2">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M10.3564 1.6665C9.42824 1.6665 8.58294 2.16709 6.89234 3.16827L6.32055 3.50688C4.62995 4.50806 3.78465 5.00865 3.32055 5.83317C2.85645 6.6577 2.85645 7.65887 2.85645 9.66122V10.3385C2.85645 12.3408 2.85645 13.342 3.32055 14.1665C3.78465 14.991 4.62995 15.4916 6.32055 16.4928L6.89234 16.8314C8.58294 17.8326 9.42824 18.3332 10.3564 18.3332C11.2846 18.3332 12.1299 17.8326 13.8205 16.8314L14.3923 16.4928C16.0829 15.4916 16.9282 14.991 17.3923 14.1665C17.8564 13.342 17.8564 12.3408 17.8564 10.3385V9.66122C17.8564 7.65887 17.8564 6.6577 17.3923 5.83317C16.9282 5.00865 16.0829 4.50806 14.3923 3.50688L13.8205 3.16827C12.1299 2.16709 11.2846 1.6665 10.3564 1.6665Z" fill="currentColor"></path>
+                                        <path d="M10.3564 6.875C8.63056 6.875 7.23145 8.27411 7.23145 10C7.23145 11.7259 8.63056 13.125 10.3564 13.125C12.0823 13.125 13.4814 11.7259 13.4814 10C13.4814 8.27411 12.0823 6.875 10.3564 6.875Z" fill="currentColor"></path>
+                                    </svg>
+                                    Sign Out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="h-[calc(100vh-60px)] relative overflow-y-auto overflow-x-hidden p-5 sm:p-7 space-y-5">
+                <div class="bg-white dark:bg-dark dark:border-gray/20 border-2 border-lightgray/10 rounded-lg flex-grow h-full">
+                    <div class="py-[30px] px-4 flex flex-col gap-[30px] overflow-auto" style="height:80%;">
+                        <div class="flex items-center justify-center gap-5">
+                            <div class="h-[2px] flex-1 opacity-10" style="background: linear-gradient(270deg, #7780A1 33.5%, rgba(5, 12, 23, 0) 100.16%);"></div>
+                            <span class="shrink-0 text-sm font-semibold">Course Outline</span>
+                            <div class="h-[2px] flex-1 opacity-10" style="background: linear-gradient(270deg, rgba(5, 12, 23, 0), #7780A1 33.5% 100.16%);"></div>
+                        </div>
+
+                        <h1 id="courseHead" class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3"></h1>
+
+                        <div id="roadmap" class="bg-white dark:bg-dark dark:border-gray/20 border-0 border-lightgray/10 rounded-lg p-5 flex-grow h-full">
+                            <!-- Content will be loaded here -->
+                             <!--   {% for section in course_outline.sections %}
+                            <div class="snake-step relative flex items-center w-full {% if loop.index0 % 2 == 0 %}left-aligned{% else %}right-aligned{% endif %}">
+                                <div class="step-content text-center w-64 p-4 bg-white rounded-lg shadow-lg">
+                                    <div class="step-number mb-2">{{ loop.index }}</div>
+                                    <a class="step-title text-lg mb-2" href="#">{{ section.section_title }}</a>
+                                    <ul class="list-disc list-inside">
+                                        {% for subsection in section.subsections %}
+                                        <li>
+                                            <strong>{{ subsection.subsection_title }}</strong>
+                                            <ul class="list-disc list-inside ml-4">
+                                               
+                                            </ul>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %} -->
+
+
+
+                            <ol class="relative border-s border-gray-200 dark:border-gray-700">                  
+                                <li class="mb-10 ms-4">
+                                    <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                                    <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">February 2022</time>
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Application UI code in Tailwind CSS</h3>
+                                    <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">Get access to over 20+ pages including a dashboard layout, charts, kanban board, calendar, and pre-order E-commerce & Marketing pages.</p>
+                                    <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Learn more <svg class="w-3 h-3 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                              </svg></a>
+                                </li>
+                                <li class="mb-10 ms-4">
+                                    <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                                    <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">March 2022</time>
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Marketing UI design in Figma</h3>
+                                    <p class="text-base font-normal text-gray-500 dark:text-gray-400">All of the pages and components are first designed in Figma and we keep a parity between the two versions even as we update the project.</p>
+                                </li>
+                                <li class="ms-4">
+                                    <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                                    <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">April 2022</time>
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">E-Commerce UI code in Tailwind CSS</h3>
+                                    <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements built on top of Tailwind CSS.</p>
+                                </li>
+                            </ol>
+                            
+                            
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0" style="position:absolute; bottom:0; right:0; left:0;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="./assets/alpine-collaspe.min.js"></script>
+<script src="./assets/alpine-persist.min.js"></script>
+<script src="./assets/alpine.min.js" defer=""></script>
+<script src="./assets/custom.js"></script>
+<script>
+    document.addEventListener("alpine:init", () => {
+        Alpine.data("chat", () => ({
+            isShowChatMenu: false,
+        }));
+    });
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCYvwWmmWnO2-BPUTNxnJ8_Zxt9nvufmzc",
+    authDomain: "aitutor-91225.firebaseapp.com",
+    projectId: "aitutor-91225",
+    storageBucket: "aitutor-91225.appspot.com",
+    messagingSenderId: "58407941688",
+    appId: "1:58407941688:web:ab6aa4d7c8363d584458cd",
+    measurementId: "G-KXKBKG17P2"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+    function logoutUser() {
+        auth.signOut().then(() => {
+                   
+                    alert('You have been logged out.');
+                    window.location.href = './signin'; 
+                }).catch((error) => {
+                  
+                    console.error('Error signing out: ', error);
+                    alert('Logout failed. Please try again.');
+                });
+    }
+
+    
+</script>
+<script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',  // Replace with your default page language code
+            autoDisplay: false,  // Disable auto display of the widget
+        }, 'google_translate_element');
+    }
+    function changeLanguage(langCode) {
+        google.translate.translatePage(langCode);
+    }
+</script>
+
+<script>
+    fetch('db/course_outline.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('courseHead').textContent = data.title;
+
+            const roadmap = document.getElementById('roadmap');
+            const sections = data.sections;
+
+            let html = '<ol class="relative border-s border-gray-200 dark:border-gray-700">';
+            sections.forEach((section, index) => {
+                html += `
+                    <li class="mb-10 ms-4">
+                        <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                        <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">${index + 1}</time>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">${section.title}</h3>
+                        <ul class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400 mt-5">`;
+
+                section.subsections.forEach(subsection => {
+                    // Check if the subsection is an object or a string
+                    const point = typeof subsection === 'string' ? subsection : subsection.title;
+
+                    html += `
+                            <li>
+                                <a href="#" class="inline-flex items-center px-4 py-2 mb-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                    ${point}
+                                    <svg class="w-3 h-3 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"></path>
+                                    </svg>
+                                </a>
+                            </li>`;
+                });
+
+                html += `
+                        </ul>
+                    </li>`;
+            });
+            html += '</ol>';
+
+            roadmap.innerHTML = html;
+        })
+        .catch(error => console.error('Error fetching JSON:', error));
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+</html>

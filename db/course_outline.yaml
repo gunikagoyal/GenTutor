@@ -1,0 +1,55 @@
+Course_Title: Artificial Intelligence Course
+Modules:
+- title: ''
+  topics:
+  - What is Artificial Intelligence?
+  - History of Artificial Intelligence
+  - Goals of Artificial Intelligence
+  - Types of Artificial Intelligence
+- title: ''
+  topics:
+  - Introduction to Machine Learning
+  - Supervised Learning
+  - Unsupervised Learning
+  - Reinforcement Learning
+  - Deep Learning
+  - Neural Networks
+  - Algorithms in Machine Learning
+- title: ''
+  topics:
+  - Introduction to NLP
+  - Text Processing
+  - Sentiment Analysis
+  - Language Modeling
+  - Named Entity Recognition
+  - Machine Translation
+- title: ''
+  topics:
+  - Introduction to Computer Vision
+  - Image Classification
+  - Object Detection
+  - Image Segmentation
+  - CNNs in Computer Vision
+  - Applications of Computer Vision
+- title: ''
+  topics:
+  - Introduction to Robotics
+  - AI in Robotics
+  - Robot Perception
+  - Path Planning
+  - Robot Control
+  - Applications of Robotics and AI
+- title: ''
+  topics:
+  - Bias and Fairness in AI
+  - Privacy Concerns
+  - Job Displacement
+  - Autonomous Weapons
+  - Ethical AI Development
+- title: ''
+  topics:
+  - Advances in AI
+  - AI & Creativity
+  - AI in Healthcare
+  - AI in Business
+  - AI Safety and Regulation

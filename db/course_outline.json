@@ -1,0 +1,99 @@
+{
+    "title": "Machine Learning Course",
+    "sections": [
+        {
+            "title": "Introduction to Machine Learning",
+            "subsections": [
+                "What is Machine Learning?",
+                "Types of Machine Learning",
+                "Applications of Machine Learning"
+            ]
+        },
+        {
+            "title": "Data Preprocessing",
+            "subsections": [
+                "Handling Missing Data",
+                "Handling Categorical Data",
+                "Feature Scaling",
+                "Data Splitting"
+            ]
+        },
+        {
+            "title": "Regression",
+            "subsections": [
+                "Simple Linear Regression",
+                "Multiple Linear Regression",
+                "Polynomial Regression",
+                "Evaluation Metrics for Regression Models"
+            ]
+        },
+        {
+            "title": "Classification",
+            "subsections": [
+                "Logistic Regression",
+                "K-Nearest Neighbors (KNN)",
+                "Support Vector Machines (SVM)",
+                "Decision Trees",
+                "Random Forest",
+                "Evaluation Metrics for Classification Models"
+            ]
+        },
+        {
+            "title": "Clustering",
+            "subsections": [
+                "K-Means Clustering",
+                "Hierarchical Clustering",
+                "DBSCAN",
+                "Evaluation Metrics for Clustering Models"
+            ]
+        },
+        {
+            "title": "Dimensionality Reduction",
+            "subsections": [
+                "Principal Component Analysis (PCA)",
+                "t-Distributed Stochastic Neighbor Embedding (t-SNE)"
+            ]
+        },
+        {
+            "title": "Feature Selection",
+            "subsections": [
+                "Filter Methods",
+                "Wrapper Methods",
+                "Embedded Methods"
+            ]
+        },
+        {
+            "title": "Introduction to Neural Networks",
+            "subsections": [
+                "Perceptron",
+                "Activation Functions",
+                "Multi-Layer Perceptron (MLP)"
+            ]
+        },
+        {
+            "title": "Deep Learning",
+            "subsections": [
+                "Convolutional Neural Networks (CNN)",
+                "Recurrent Neural Networks (RNN)",
+                "Transfer Learning",
+                "Autoencoders"
+            ]
+        },
+        {
+            "title": "Model Evaluation and Hyperparameter Tuning",
+            "subsections": [
+                "Cross-Validation",
+                "Grid Search",
+                "Random Search",
+                "Hyperparameter Optimization"
+            ]
+        },
+        {
+            "title": "Deploying Machine Learning Models",
+            "subsections": [
+                "Model Serialization",
+                "Model Deployment Technologies"
+            ]
+        }
+    ]
+}

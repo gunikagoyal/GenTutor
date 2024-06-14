@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="path_to_your_styles.css"> <!-- Update with your stylesheet path -->
+</head>
+<body>
+    <!-- Navbar start -->
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html" class="flex items-center gap-2"> <!-- Update with your home page path -->
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9.99996" cy="4.99984" r="3.33333" fill="currentColor"></circle>
+                        <ellipse opacity="0.33" cx="9.99996" cy="14.1668" rx="5.83333" ry="3.33333" fill="currentColor"></ellipse>
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="profile.html" class="flex items-center gap-2">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9.99996" cy="4.99984" r="3.33333" fill="currentColor"></circle>
+                        <ellipse opacity="0.33" cx="9.99996" cy="14.1668" rx="5.83333" ry="3.33333" fill="currentColor"></ellipse>
+                    </svg>
+                    Profile
+                </a>
+            </li>
+            <!-- Add more nav items here -->
+        </ul>
+    </nav>
+    <!-- Navbar end -->
+
+    <!-- Sidebar start -->
+    <aside>
+        <!-- Your sidebar content here -->
+    </aside>
+    <!-- Sidebar end -->
+
+    <!-- Profile page content start -->
+    <div>
+        <h1>Profile Page</h1>
+        <!-- Add your profile page content here -->
+    </div>
+    <!-- Profile page content end -->
+
+    <script src="./assets/alpine-collaspe.min.js"></script>
+    <script src="./assets/alpine-persist.min.js"></script>
+    <script src="./assets/alpine.min.js" defer=""></script>
+    <script src="./assets/custom.js"></script>
+
+    <script>
+        document.addEventListener("alpine:init", () => {
+            Alpine.data("chat", () => ({
+                isShowChatMenu: false,
+            }));
+        });
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCYvwWmmWnO2-BPUTNxnJ8_Zxt9nvufmzc",
+            authDomain: "aitutor-91225.firebaseapp.com",
+            projectId: "aitutor-91225",
+            storageBucket: "aitutor-91225.appspot.com",
+            messagingSenderId: "58407941688",
+            appId: "1:58407941688:web:ab6aa4d7c8363d584458cd",
+            measurementId: "G-KXKBKG17P2"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const auth = firebase.auth();
+
+        function checkUserAuthentication() {
+            auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    window.location.href = './signin';
+                }
+            });
+        }
+
+        checkUserAuthentication();
+
+        function logoutUser() {
+            auth.signOut().then(() => {
+                alert('You have been logged out.');
+                window.location.href = './signin';
+            }).catch((error) => {
+                console.error('Error signing out: ', error);
+                alert('Logout failed. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>
